@@ -35,7 +35,11 @@ AMyCharacter::AMyCharacter()
 
 	bDead = false;
 
+	bWin = false;
+
 	Power = 100.0f;
+
+	Wood = 0;
 
 }
 
@@ -66,6 +70,11 @@ void AMyCharacter::Tick(float DeltaTime)
 
 		GetMesh()->SetSimulatePhysics(true);
 
+		FTimerHandle UnuseHandle;
+		GetWorldTimerManager().SetTimer(UnuseHandle, this, &AMyCharacter::RestartGame, 3.0f, false);
+	}
+
+	if (bWin == true) {
 		FTimerHandle UnuseHandle;
 		GetWorldTimerManager().SetTimer(UnuseHandle, this, &AMyCharacter::RestartGame, 3.0f, false);
 	}
@@ -129,6 +138,13 @@ void AMyCharacter::OnBeginOverlap(UPrimitiveComponent* HitComp,
 			Power = 100.0f;
 		}
 
+		OtherActor->Destroy();
+	}
+	else if (OtherActor->ActorHasTag("Wood")) {
+		Wood += 1;
+		if (Wood >= 10) {
+			bWin = true;
+		}
 		OtherActor->Destroy();
 	}
 }

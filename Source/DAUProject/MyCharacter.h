@@ -35,11 +35,16 @@ public:
 		
 		bool bDead;
 
+		bool bWin;
+
 		UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		float Power;
 
 		UPROPERTY(EditAnywhere)
 		float Power_Treshold;
+
+		UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		int Wood;
 
 		UFUNCTION()
 		void OnBeginOverlap(
